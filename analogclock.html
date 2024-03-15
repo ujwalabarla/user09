@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analog Clock</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<style>
+   body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.clock {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 10px solid #333;
+}
+
+.hour-hand, .minute-hand, .second-hand {
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background-color: #333;
+    top: 50%;
+    transform-origin: 100%;
+}
+
+.hour-hand {
+    transform: rotate(30deg);
+}
+
+.minute-hand {
+    transform: rotate(90deg);
+}
+
+.second-hand {
+    transform: rotate(180deg);
+}
+
+.center-circle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #333;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+ 
+</style>
+<body>
+    <div class="clock">
+        <div class="hour-hand"></div>
+        <div class="minute-hand"></div>
+        <div class="second-hand"></div>
+        <div class="center-circle"></div>
+    </div>
+    <script >
+      function setClock() {
+    const now = new Date();
+    const hours = now.getHours() % 12; // Convert to 12-hour clock
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const hourDeg = (hours * 30) + (0.5 * minutes); // Each hour is 30 degrees, plus half a degree for every minute
+    const minuteDeg = (minutes * 6) + (0.1 * seconds); // Each minute is 6 degrees, plus 0.1 degrees for every second
+    const secondDeg = seconds * 6; // Each second is 6 degrees
+
+    document.querySelector('.hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+    document.querySelector('.minute-hand').style.transform = `rotate(${minuteDeg}deg)`;
+    document.querySelector('.second-hand').style.transform = `rotate(${secondDeg}deg)`;
+}
+
+setInterval(setClock, 1000); // Update the clock every second
+  
+    </script>
+</body>
+</html>
