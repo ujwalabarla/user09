@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Image Generator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#output {
+    margin-top: 20px;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>AI Image Generator</h1>
+        <input type="text" id="textInput" placeholder="Enter description...">
+        <button onclick="generateImage()">Generate Image</button>
+        <div id="output"></div>
+    </div>
+    <script >
+        function generateImage() {
+    const textInput = document.getElementById('textInput').value;
+    const output = document.getElementById('output');
+
+    fetch('https://api.deepai.org/api/text-to-image', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Api-Key': 'YOUR_API_KEY_HERE' // Get your API key from DeepAI.org
+        },
+        body: JSON.stringify({
+            text: textInput
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.output_url) {
+            output.innerHTML = `<img src="${data.output_url}" alt="Generated Image">`;
+        } else {
+            output.textContent = 'Failed to generate image';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        output.textContent = 'Failed to generate image';
+    });
+}
+
+    </script>
+</body>
+</html>
