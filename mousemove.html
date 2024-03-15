@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mousemove Parallax</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.parallax-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.4s;
+}
+
+#parallax1 {
+    background-image: url('image1.jpg');
+    z-index: -1;
+}
+
+#parallax2 {
+    background-image: url('image2.jpg');
+    z-index: -2;
+}
+
+</style>
+<body>
+    <div class="parallax-container">
+        <div class="parallax" id="parallax1"></div>
+        <div class="parallax" id="parallax2"></div>
+    </div>
+    <script >
+      const parallax1 = document.getElementById('parallax1');
+const parallax2 = document.getElementById('parallax2');
+
+document.addEventListener('mousemove', function(e) {
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+
+    parallax1.style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+    parallax2.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+});
+  
+    </script>
+</body>
+</html>
