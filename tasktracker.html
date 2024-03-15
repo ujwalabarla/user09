@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Tracker</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f4f4f4;
+}
+
+li:last-child {
+    margin-bottom: 0;
+}
+
+.delete-btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.update-btn {
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+  
+</style>
+<body>
+    <div class="container">
+        <h1>Task Tracker</h1>
+        <form id="taskForm">
+            <input type="text" id="taskInput" placeholder="Add Task..." required>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="taskList"></ul>
+    </div>
+    <script >
+      const taskForm = document.getElementById('taskForm');
+const taskInput = document.getElementById('taskInput');
+const taskList = document.getElementById('taskList');
+
+taskForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const taskText = taskInput.value.trim();
+
+    if (taskText !== '') {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${taskText}</span>
+            <button class="delete-btn">Delete</button>
+            <button class="update-btn">Update</button>
+        `;
+        taskList.appendChild(li);
+        taskInput.value = '';
+    }
+});
+
+taskList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-btn')) {
+        e.target.parentElement.remove();
+    } else if (e.target.classList.contains('update-btn')) {
+        const newText = prompt('Enter new task:');
+        if (newText !== null && newText.trim() !== '') {
+            e.target.parentElement.querySelector('span').textContent = newText.trim();
+        }
+    }
+});
+  
+    </script>
+</body>
+</html>
